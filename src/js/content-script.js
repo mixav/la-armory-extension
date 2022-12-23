@@ -2,7 +2,7 @@ let ratingByClass = {};
 let characterList = [];
 const negativeList = ['Износ', 'Ржавчина', 'Медлительность', 'Миролюбие'];
 const settings = {
-    loadAtStart: false,
+    loadAtStart: true,
     modifyEngravings: true
 }
 

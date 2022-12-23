@@ -5,7 +5,6 @@ function save_options() {
         loadAtStart: loadAtStart,
         modifyEngravings: modifyEngravings
     }, function () {
-        // Update status to let user know options were saved.
         let status = document.getElementById('status');
         status.textContent = 'Options saved.';
         setTimeout(function () {
@@ -14,12 +13,10 @@ function save_options() {
     });
 }
 
-// Restores select box and checkbox state using the preferences
-// stored in chrome.storage.
 function restore_options() {
     // Use default value
     chrome.storage.sync.get({
-        loadAtStart: false,
+        loadAtStart: true,
         modifyEngravings: true
     }, function (items) {
         document.getElementById('loadAtStart').checked = items.loadAtStart;
