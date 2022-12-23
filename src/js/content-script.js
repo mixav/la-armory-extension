@@ -1,6 +1,18 @@
 let ratingByClass = {};
 let characterList = [];
 const negativeList = ['Износ', 'Ржавчина', 'Медлительность', 'Миролюбие'];
+const settings = {
+    loadAtStart: false,
+    modifyEngravings: true
+}
+
+const loadAllCharacters = function () {
+    characterList.forEach(char => {
+        chrome.runtime.sendMessage({type: 'load-character-info', name: char.name}, (response) => {
+            char.element.innerHTML = char.name + '(' + response.gs + ')'
+        });
+    })
+}
 
 function getForClasses(className) {
     chrome.runtime.sendMessage({type: 'load-for-class', message: className}, (response) => {
@@ -21,6 +33,13 @@ function findByClassAndName(charClass, name) {
     return 0;
 }
 
+async function initStorageCache() {
+    await chrome.storage.sync.get().then((storedSettings) => {
+        Object.assign(settings, storedSettings);
+    })
+}
+
+await initStorageCache();
 let domCharacterList = document.querySelectorAll("#expand-character-list > ul > li");
 domCharacterList.forEach((character) => {
     characterList.push({
@@ -31,16 +50,14 @@ domCharacterList.forEach((character) => {
 });
 let expandCharacterList = document.getElementById('expand-character-list');
 let button = document.createElement('button');
-button.onclick = function () {
-    characterList.forEach(char => {
-        chrome.runtime.sendMessage({type: 'load-character-info', name: char.name}, (response) => {
-            char.element.innerHTML = char.name + '(' + response.gs + ')'
-        });
-    })
-}
+button.onclick = loadAllCharacters;
 button.innerHTML = '&circlearrowright;'
 expandCharacterList.prepend(button);
-getForClasses([...new Set(characterList.map(item => item.class))]);
+if (settings.loadAtStart) {
+    loadAllCharacters()
+} else {
+    getForClasses([...new Set(characterList.map(item => item.class))])
+}
 
 function modifyEngravingsList() {
     let allEngravingList = document.querySelectorAll('.swiper-slide>li');
@@ -68,4 +85,6 @@ function modifyEngravingsList() {
     }
 }
 
-modifyEngravingsList();
+if (settings.modifyEngravings) {
+    modifyEngravingsList();
+}
