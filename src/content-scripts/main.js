@@ -40,7 +40,12 @@ async function initStorageCache() {
     })
 }
 
-await initStorageCache();
+try {
+    await initStorageCache();
+} catch (e) {
+    console.error(e)
+}
+
 let domCharacterList = document.querySelectorAll("#expand-character-list > ul > li");
 domCharacterList.forEach((character) => {
     characterList.push({

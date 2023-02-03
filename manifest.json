@@ -1,11 +1,32 @@
 {
   "manifest_version": 3,
-  "name": "CRXJS Vue Vite Example",
-  "version": "1.0.0",
+  "name": "LA-armory-enhance",
+  "version": "0.0.2",
   "action": {
+    "default_icon": {
+      "16": "src/assets/GameIcon.ico"
+    },
+    "default_title": "LAAE",
     "default_popup": "index.html"
   },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.лостарк.рф/*"
+      ],
+      "js": [
+        "src/content-scripts/main.js"
+      ]
+    }
+  ],
   "permissions": [
     "storage"
+  ],
+  "background": {
+    "service_worker": "src/background/main.js"
+  },
+  "host_permissions": [
+    "https://lostark.ru/*",
+    "https://*.лостарк.рф/*"
   ]
 }

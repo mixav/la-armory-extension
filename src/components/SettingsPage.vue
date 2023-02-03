@@ -38,22 +38,19 @@ onMounted(() => {
   <div style="min-width:400px">
     <label>
       <input type="checkbox" v-model="state.loadAtStart">
-      <span>Загружать всех персонажей при открытии страницы</span>
+      Загружать всех персонажей при открытии страницы
     </label>
     <br>
     <label>
       <input type="checkbox" v-model="state.modifyEngravings">
       Список гравировок одним блоком(без разделения на страницы)
     </label>
+    <br>
     <label>
       <input type="checkbox" v-model="state.displayQuality">
       Отображать полоску с качеством
     </label>
-
   </div>
   <div id="status"></div>
   <button @click="save_settings" id="save">Save</button>
 </template>
-
-<style scoped>
-</style>
