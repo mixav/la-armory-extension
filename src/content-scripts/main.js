@@ -13,23 +13,24 @@ async function initStorageCache() {
     })
 }
 
-let domCharacterList = document.querySelectorAll("#expand-character-list > ul > li");
-domCharacterList.forEach((character) => {
-    characterList.push({
-        element: character.querySelector('span > button > span'),
-        name: character.querySelector("button span").textContent,
-        class: character.querySelector("button img").getAttribute('alt')
-    });
-});
-let expandCharacterList = document.getElementById('expand-character-list');
-let button = document.createElement('button');
-button.onclick = (() => {
-    loadAllCharacters(characterList)
-});
-button.innerHTML = '&circlearrowright;'
-expandCharacterList.prepend(button);
-
 try {
+
+    let domCharacterList = document.querySelectorAll("#expand-character-list > ul > li");
+    domCharacterList.forEach((character) => {
+        characterList.push({
+            element: character.querySelector('span > button > span'),
+            name: character.querySelector("button span").textContent,
+            class: character.querySelector("button img").getAttribute('alt')
+        });
+    });
+    let expandCharacterList = document.getElementById('expand-character-list');
+    let button = document.createElement('button');
+    button.onclick = (() => {
+        loadAllCharacters(characterList)
+    });
+    button.innerHTML = '&circlearrowright;'
+    expandCharacterList.prepend(button);
+
     initStorageCache().then(() => {
         if (cachedSettings.loadAtStart) {
             loadAllCharacters(characterList)
