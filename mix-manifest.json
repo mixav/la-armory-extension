@@ -1,9 +1,0 @@
-{
-    "/dist/js/background.js": "/dist/js/background.js",
-    "/dist/js/options.js": "/dist/js/options.js",
-    "/dist/js/popup.js": "/dist/js/popup.js",
-    "/dist/css/button.css": "/dist/css/button.css",
-    "/dist/popup.html": "/dist/popup.html",
-    "/dist/manifest.json": "/dist/manifest.json",
-    "/dist/options.html": "/dist/options.html"
-}

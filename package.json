@@ -1,24 +1,20 @@
 {
-  "name": "la-armory-enhance",
-  "version": "1.0.0",
+  "name": "la-armory-ext",
+  "private": true,
+  "version": "0.0.2",
   "scripts": {
-    "local": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --env=local --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "staging": "cross-env NODE_ENV=staging node_modules/webpack/bin/webpack.js --progress --env=staging --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --env=production --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "dev": "npm run local",
-    "prod": "npm run production",
-    "watch": "npm run local -- --watch"
-  },
-  "devDependencies": {
-    "@vue/composition-api": "^1.4.9",
-    "cross-env": "^7.0.3",
-    "laravel-mix": "^6.0.43",
-    "saas": "^1.0.0",
-    "sass-loader": "^12.6.0"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@vespaiach/axios-fetch-adapter": "^0.2.2",
-    "axios": "^0.26.1",
-    "regenerator-runtime": "^0.13.9"
+    "@vespaiach/axios-fetch-adapter": "^0.3.1",
+    "axios": "^0.27.2",
+    "vue": "^3.2.25"
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^1.0.14",
+    "@vitejs/plugin-vue": "^2.3.4",
+    "vite": "^2.9.15"
   }
 }

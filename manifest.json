@@ -1,13 +1,13 @@
 {
   "manifest_version": 3,
   "name": "LA-armory-enhance",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "action": {
     "default_icon": {
-      "16": "/images/GameIcon.ico"
+      "16": "src/assets/GameIcon.ico"
     },
     "default_title": "LAAE",
-    "default_popup": "popup.html"
+    "default_popup": "index.html"
   },
   "content_scripts": [
     {
@@ -15,7 +15,7 @@
         "https://*.лостарк.рф/*"
       ],
       "js": [
-        "js/content-script.js"
+        "src/content-scripts/main.js"
       ]
     }
   ],
@@ -23,7 +23,7 @@
     "storage"
   ],
   "background": {
-    "service_worker": "js/background.js"
+    "service_worker": "src/background/main.js"
   },
   "host_permissions": [
     "https://lostark.ru/*",
