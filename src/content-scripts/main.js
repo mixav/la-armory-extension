@@ -3,6 +3,8 @@ import {displayQuality} from "./modules/quality-mod"
 import {modifyEngravingsList} from "./modules/engravings-mod"
 import {getForClasses} from "./modules/gs-rating";
 import {loadAllCharacters} from "./modules/gs-personal";
+import {createApp} from "vue";
+import RefreshButton from "./view/RefreshButton.vue";
 
 let cachedSettings = {};
 let characterList = [];
@@ -14,22 +16,16 @@ async function initStorageCache() {
 }
 
 try {
-
-    let domCharacterList = document.querySelectorAll("#expand-character-list > ul > li");
-    domCharacterList.forEach((character) => {
+    document.querySelectorAll("#expand-character-list > ul > li").forEach((character) => {
         characterList.push({
             element: character.querySelector('span > button > span'),
             name: character.querySelector("button span").textContent,
             class: character.querySelector("button img").getAttribute('alt')
         });
     });
-    let expandCharacterList = document.getElementById('expand-character-list');
-    let button = document.createElement('button');
-    button.onclick = (() => {
-        loadAllCharacters(characterList)
-    });
-    button.innerHTML = '&circlearrowright;'
-    expandCharacterList.prepend(button);
+    const app = document.createElement('div');
+    document.getElementById('expand-character-list').prepend(app);
+    createApp(RefreshButton, {characterList: characterList}).mount(app);
 
     initStorageCache().then(() => {
         if (cachedSettings.loadAtStart) {

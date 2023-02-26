@@ -1,27 +1,17 @@
-import {NEGATIVE_ENGRAVINGS} from "../../constants/NegativeEngravings";
+import {createApp} from "vue";
+import EngravingList from "../view/EngravingList.vue";
 
 export function modifyEngravingsList() {
-    let allEngravingList = document.querySelectorAll('.swiper-slide>li');
+    const engravingBlock = document.querySelector('.profile-ability-engrave');
+    engravingBlock.style.height = 'auto';
+    const allEngravingList = document.querySelectorAll('.swiper-slide>li');
+    const engravingArray = [];
     if (allEngravingList.length > 0) {
         allEngravingList.forEach(element => {
-            let divStyled = document.createElement('div')
-            divStyled.style.justifyContent = "space-between"
-            divStyled.innerHTML = element.firstElementChild.innerHTML.replace(/(.+)\s(\d ур\.)/g, '<span>$1</span><span>$2</span>')
-            if (NEGATIVE_ENGRAVINGS.includes(divStyled.firstElementChild.innerText)) {
-                divStyled.firstElementChild.style.color = 'red'
-            }
-
-            element.firstElementChild.replaceWith(divStyled)
+            let engravingInfo = JSON.parse(element.firstElementChild.innerHTML.replace(/(.+)\s(\d) ур\./g, '{"name":"$1", "level":$2}'))
+            engravingInfo.tooltipText = element.lastElementChild.firstElementChild.innerText
+            engravingArray.push(engravingInfo)
         })
-        if (allEngravingList.length > 3) {
-            let engravingElement = document.querySelector('ul.swiper-slide.swiper-slide-active');
-            let engravingsSwiper = document.querySelector('div.swiper-wrapper');
-            if (engravingElement) {
-                engravingElement.replaceChildren(...allEngravingList);
-                document.querySelector('.swiper-option').remove();
-                document.querySelector('.profile-ability-engrave').style.height = 'auto';
-                engravingsSwiper.replaceChildren(document.querySelector('div.swiper-wrapper').firstElementChild)
-            }
-        }
     }
+    createApp(EngravingList, {engravingList: engravingArray}).mount(engravingBlock);
 }
