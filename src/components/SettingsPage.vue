@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, reactive} from "vue";
 
-const state = reactive({loadAtStart: false, modifyEngravings: false, displayQuality: false})
+const state = reactive({loadAtStart: true, modifyEngravings: true, displayQuality: true})
 
 function restore_settings() {
   chrome.storage.sync.get({
@@ -20,13 +20,15 @@ function save_settings() {
     loadAtStart: state.loadAtStart,
     modifyEngravings: state.modifyEngravings,
     displayQuality: state.displayQuality
-  }, function () {
-    let status = document.getElementById('status');
-    status.textContent = 'Options saved.';
-    setTimeout(function () {
-      status.textContent = '';
-    }, 750);
-  });
+  }, saved_successfully);
+}
+
+function saved_successfully() {
+  const status = document.getElementById('status');
+  status.textContent = 'Options saved.';
+  setTimeout(function () {
+    status.textContent = '';
+  }, 750);
 }
 
 onMounted(() => {
@@ -35,7 +37,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div style="min-width:400px">
+  <div>
     <label>
       <input type="checkbox" v-model="state.loadAtStart">
       Загружать всех персонажей при открытии страницы
@@ -51,6 +53,6 @@ onMounted(() => {
       Отображать полоску с качеством
     </label>
   </div>
+  <v-btn variant="outlined" @click="save_settings" id="save" color="normal">Save</v-btn>
   <div id="status"></div>
-  <button @click="save_settings" id="save">Save</button>
 </template>

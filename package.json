@@ -10,7 +10,9 @@
   "dependencies": {
     "@vespaiach/axios-fetch-adapter": "^0.3.1",
     "axios": "^0.27.2",
-    "vue": "^3.2.25"
+    "qs": "^6.11.0",
+    "vue": "^3.2.25",
+    "vuetify": "^3.1.4"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^1.0.14",
