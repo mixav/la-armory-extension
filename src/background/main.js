@@ -16,7 +16,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                         jsonrpc: "2.0",
                         method: "avatarRating_getRatingByClass",
                         params: {
-                            class: CLASS_TABLE[message].toString()
+                            class: CLASS_TABLE[message].code.toString()
                         }
                     })
                 }
@@ -33,16 +33,28 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             axios.request({
                 method: 'get', url: API.ARMORY_URL + request.name, adapter: fetchAdapter
             }).then(response => {
-                let gscore = response.data
-                    .split('<span>Максимальный рейтинг</span><span><small>Ур.</small>')[1]
-                    .split('</small></span></div>')[0]
-                    .replace('<small>', '')
-                    .replace(',', '')
-                    .replace('.00', '');
-                sendResponse({
-                    name: request.name,
-                    gs: gscore
-                });
+                try {
+                    let gscore = response.data
+                        .split('<span>Максимальный рейтинг</span><span><small>Ур.</small>')[1]
+                        .split('</small></span></div>')[0]
+                        .replace('<small>', '')
+                        .replace(',', '')
+                        .replace('.00', '');
+                    let className = response.data
+                        .split('.png\" alt=\"')[1]
+                        .split('"')[0];
+                    sendResponse({
+                        type: 'success',
+                        name: request.name,
+                        gs: gscore,
+                        class: className
+                    });
+                } catch (e) {
+                    sendResponse({
+                        type: 'error',
+                        reason: 'not-found'
+                    })
+                }
             }).catch(error => console.error(error))
         } else if (request.type === 'load-mari-shop') {
             axios.request({

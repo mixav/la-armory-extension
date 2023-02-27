@@ -5,3 +5,7 @@ export function loadAllCharacters(characterList) {
         });
     })
 }
+
+export async function getCharacterInfo(character) {
+    return await chrome.runtime.sendMessage({type: 'load-character-info', name: character});
+}
